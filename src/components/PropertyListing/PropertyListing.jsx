@@ -1,34 +1,42 @@
-import React from 'react';
+//Global
+import React from "react";
+import PropTypes from "prop-types";
+
+// Components
 import PropertyCard from '../PropertyCard';
+
+// Style
 import './PropertyListing.scss';
 
-const DUMMY_PROPERTY = {
-    id: 73864112,
-    bedrooms: 3,
-    summary: 'Property 1 Situated moments from the River Thames in Old Chelsea...',
-    displayAddress: '1 CHEYNE WALK, CHELSEA, SW3',
-    propertyType: 'Flat',
-    price: 1950000,
-    branchName: 'M2 Property, London',
-    propertyUrl: '/property-for-sale/property-73864112.html',
-    contactUrl: '/property-for-sale/contactBranch.html?propertyId=73864112',
-    propertyTitle: '3 bedroom flat for sale',
-    mainImage:
-        'https://media.rightmove.co.uk/dir/crop/10:9-16:9/38k/37655/53588679/37655_CAM170036_IMG_01_0000_max_476x317.jpg',
-};
-
-const PropertyListing = () => {
+const PropertyListing = ({ properties }) => {
     return (
         <ul className="PropertyListing">
-            {Array(5)
-                .fill(DUMMY_PROPERTY)
-                .map((property, index) => (
-                    <li key={index}>
+            {properties.map((property, index) => {
+                return (
+                    <li key={`${property.id}-${index}`}>
                         <PropertyCard {...property} />
-                    </li>
-                ))}
+                    </li>);
+            })}
         </ul>
     );
+};
+
+PropertyListing.propTypes = {
+    properties: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number,
+            bedrooms: PropTypes.number,
+            summary: PropTypes.string,
+            displayAddress: PropTypes.string,
+            propertyType: PropTypes.string,
+            price: PropTypes.number,
+            branchName: PropTypes.string,
+            propertyUrl: PropTypes.string,
+            contactUrl: PropTypes.string,
+            propertyTitle: PropTypes.string,
+            mainImage: PropTypes.string
+        })
+    ),
 };
 
 export default PropertyListing;
